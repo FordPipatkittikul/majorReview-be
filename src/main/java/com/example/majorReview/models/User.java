@@ -6,16 +6,21 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-increment (SERIAL in PostgreSQL)
     @Column(name = "user_id")
     private Long id;
 
-    @Column(name = "name", columnDefinition = "TEXT")
+    @Column(name = "email", columnDefinition = "TEXT", nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "name", columnDefinition = "TEXT", nullable = false)
     private String name;
 
     @Column(name = "password", nullable = false)
@@ -27,6 +32,14 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getName() {

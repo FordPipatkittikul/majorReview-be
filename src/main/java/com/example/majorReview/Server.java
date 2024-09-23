@@ -11,3 +11,5 @@ public class Server {
 	}
 
 }
+
+// running command: C:\Users\Asus\Downloads\majorReview\majorReview> ./mvnw spring-boot:run
