@@ -1,24 +1,46 @@
 package com.example.majorReview.utils;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.Base64;
+
+import com.example.majorReview.models.User;
 
 public class JwtUtils {
 
-    //private static final String SECRET_KEY = System.getenv("JWT_SECRET_KEY");
+    private static final String BASE64_SECRET = "sD7N1J7+JvDBEmef+kmHBjRkjoVS5lO5yF3zXKqvkbDl06QKKFAC1gcBiS03946AgVomYgqvLe1XPrq2BaMRtA==";
 
-    public static String generateToken(Long userId, String duration) {
+    private static final SecretKey SECRET_KEY = Keys.hmacShaKeyFor(Base64.getDecoder().decode(BASE64_SECRET));
+    // private static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512); // Generate secure key
+
+    public static String generateToken(User user, String duration) {
         long expirationTime = getExpirationTime(duration);  // Convert duration to milliseconds
 
         return Jwts.builder()
-                .setSubject(userId.toString())
+                .setSubject(user.getId().toString())
                 .claim("isAdmin", false)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
-                .signWith(SignatureAlgorithm.HS512, "7v3++pmJzlQ0r+FJXFdHGjJxXq7BHHOWp9zP7xUKseA=")
+                .signWith(SECRET_KEY)
                 .compact();
     }
+
+
+    public static String getUserIdFromToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(SECRET_KEY)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getSubject();
+    }
+
+
 
     private static long getExpirationTime(String duration) {
         // Example: 1h = 1 hour, 7d = 7 days, 1m = 1 minute

@@ -7,16 +7,20 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig {
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
+
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:5173") // Replace with process.env.CLIENT_URL equivalent
+                        .allowedOrigins("http://localhost:5173") // have to change to other endpoint once it deploy will see how it goes
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowCredentials(true);
             }
         };
+
     }
+
 }

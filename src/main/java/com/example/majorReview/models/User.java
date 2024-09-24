@@ -26,6 +26,7 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+    // Getters and setters
     public Long getId() {
         return id;
     }

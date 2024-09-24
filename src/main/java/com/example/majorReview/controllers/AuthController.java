@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Cookie;
 
 import com.example.majorReview.services.UserService;
 import com.example.majorReview.models.User;
+import com.example.majorReview.utils.JwtUtils;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -21,20 +24,30 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> httpLogin(@RequestBody User user,
-                                               @RequestHeader("User-Agent") String userAgent) {
+                                               @RequestHeader("User-Agent") String userAgent,
+                                               HttpServletResponse response) {
         try{
 
-            User isValidEmailAndPassword = userService.findByEmailAndPassword(user.getEmail(), user.getPassword());
-            if(isValidEmailAndPassword == null){
+            User userExist = userService.findByEmailAndPassword(user.getEmail(), user.getPassword());
+            String token = JwtUtils.generateToken(userExist, "7d");
+
+            if(userExist == null){
                 return new ResponseEntity<>(
                         "{\"msg\": \"Invalid credentials\"}",
                         HttpStatus.UNAUTHORIZED
                 );
             }
 
+            Cookie jwtCookie = new Cookie("token", token);
+            jwtCookie.setHttpOnly(true);
+            jwtCookie.setSecure(true);
+            jwtCookie.setPath("/");
+            jwtCookie.setMaxAge(604800);  // Set expiration time (7 days = 604800 seconds)
+            response.addCookie(jwtCookie); // Add the cookie to the response
+
             // Return a response by JSON and HTTP status message 200
             return new ResponseEntity<>(
-                    "{\"msg\": \"successfully login\"}",
+                    token,
                     HttpStatus.OK
             );
 
@@ -59,7 +72,7 @@ public class AuthController {
 
         try {
 
-            // Try to create and save the user in the database
+            // Create and save the user in the database
             User newUser = userService.createUser(user.getEmail(),user.getName(), user.getPassword());
 
             // Return a response by JSON and HTTP status message 201
@@ -78,6 +91,27 @@ public class AuthController {
                     HttpStatus.INTERNAL_SERVER_ERROR
             );
         }
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Object> httpLogout(HttpServletResponse response) {
+
+        // in order to delete cookie or which is logout,
+        // we need to create a new cookie with the same name, set its max age to zero.
+        // I know it is weird.
+        Cookie jwtCookie = new Cookie("token", "");
+        jwtCookie.setHttpOnly(true);
+        jwtCookie.setSecure(true);
+        jwtCookie.setPath("/");
+        jwtCookie.setMaxAge(0);  // Invalidate cookie
+        response.addCookie(jwtCookie);
+
+        return new ResponseEntity<>(
+                "{\"msg\": \"Successfully logout\"}",
+                HttpStatus.OK
+        );
+
+
     }
 
 

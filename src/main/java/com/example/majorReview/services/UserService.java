@@ -2,9 +2,9 @@ package com.example.majorReview.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Optional;
+
 import com.example.majorReview.repositories.UserRepository;
-
-
 import com.example.majorReview.models.User;
 
 @Service
@@ -27,9 +27,14 @@ public class UserService {
         if (user != null && password.equals(user.getPassword())) {
             return user;
         } else {
-            return null; // Or throw an exception based on your requirement
+            return null;
         }
 
+    }
+
+    public User findUserById(Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        return user.orElse(null);  // Return null if user not found
     }
 
 }
