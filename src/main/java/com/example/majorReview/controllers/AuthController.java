@@ -47,7 +47,7 @@ public class AuthController {
 
             // Return a response by JSON and HTTP status message 200
             return new ResponseEntity<>(
-                    token,
+                    userExist,
                     HttpStatus.OK
             );
 
