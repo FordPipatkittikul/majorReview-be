@@ -1,8 +1,8 @@
 # majorReview-be
 
 # Requirement
-JDK 21.0.4 or above
-[Maven 3.9+](https://maven.apache.org/download.cgi)
+- JDK 21.0.4 or above
+- [Maven 3.9+](https://maven.apache.org/download.cgi)
 
 # Setting up
 -  In root directory Run `mvn clean install`
