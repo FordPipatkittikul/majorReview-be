@@ -1,4 +1,4 @@
-package com.example.majorReview;
+package com.example.majorReview.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

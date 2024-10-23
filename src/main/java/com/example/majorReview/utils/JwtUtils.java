@@ -2,20 +2,22 @@ package com.example.majorReview.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import io.github.cdimascio.dotenv.Dotenv;
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.Base64;
+//import java.util.logging.Logger;
 
 import com.example.majorReview.models.User;
 
 public class JwtUtils {
 
-    private static final String BASE64_SECRET = "sD7N1J7+JvDBEmef+kmHBjRkjoVS5lO5yF3zXKqvkbDl06QKKFAC1gcBiS03946AgVomYgqvLe1XPrq2BaMRtA==";
+//    private static final Logger logger = Logger.getLogger(JwtUtils.class.getName());
+    private static final Dotenv dotenv = Dotenv.load();
+    private static final String BASE64_SECRET = dotenv.get("BASE64_SECRET");
 
     private static final SecretKey SECRET_KEY = Keys.hmacShaKeyFor(Base64.getDecoder().decode(BASE64_SECRET));
-    // private static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512); // Generate secure key
 
     public static String generateToken(User user, String duration) {
         long expirationTime = getExpirationTime(duration);  // Convert duration to milliseconds
