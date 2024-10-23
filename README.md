@@ -6,7 +6,7 @@
 
 # Setting up
 -  In root directory Run `mvn clean install`
-- `majorReview\resources\application.properties` is where you are connect to db. please note what I have rn in this repo is fake db
+- `majorReview\resources\application.properties` is where you are connect to db.
 
 # Getting start
 -  In root directory Run `./mvnw spring-boot:run`
