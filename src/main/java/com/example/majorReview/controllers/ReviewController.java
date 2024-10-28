@@ -1,5 +1,6 @@
 package com.example.majorReview.controllers;
 
+import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,21 +48,20 @@ public class ReviewController {
             Review reviewInfo = reviewService.createReview(review.getMajorName(),review.getQuality(),review.getDifficulty(),review.getReview(),user);
 
 
-
-            return new ResponseEntity<>(
-                    "{\"msg\": \"review created successfully\"}",
-                    HttpStatus.CREATED
-            );
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body("{\"msg\": \"review created successfully\"}");
 
         } catch (Exception e) {
             // Log the error for debugging purposes
             System.err.println("Error while create review: " + e.getMessage());
 
             // Return a failure response with JSON and HTTP status message 500
-            return new ResponseEntity<>(
-                    "{\"msg\": \"Fail to create review\"}",
-                    HttpStatus.INTERNAL_SERVER_ERROR
-            );
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body("{\"msg\": \"Fail to create review\"}");
         }
 
     }

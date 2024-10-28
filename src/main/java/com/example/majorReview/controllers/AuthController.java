@@ -56,7 +56,7 @@ public class AuthController {
 
             // Log the error for debugging purposes
             System.err.println("Error while login: " + e.getMessage());
-            e.printStackTrace();
+
 
             // Return a failure response with JSON and HTTP status message 500
             return new ResponseEntity<>(
