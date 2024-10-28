@@ -2,6 +2,7 @@ package com.example.majorReview.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -55,6 +56,7 @@ public class AuthController {
 
             // Log the error for debugging purposes
             System.err.println("Error while login: " + e.getMessage());
+            e.printStackTrace();
 
             // Return a failure response with JSON and HTTP status message 500
             return new ResponseEntity<>(
@@ -76,20 +78,20 @@ public class AuthController {
             User newUser = userService.createUser(user.getEmail(),user.getName(), user.getPassword());
 
             // Return a response by JSON and HTTP status message 201
-            return new ResponseEntity<>(
-                    "{\"msg\": \"User created successfully\"}",
-                    HttpStatus.CREATED
-            );
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .contentType(MediaType.APPLICATION_JSON) // Set content type to JSON
+                    .body("{\"msg\": \"User created successfully\"}");
         } catch (Exception e) {
 
             // Log the error for debugging purposes
             System.err.println("Error while registering user: " + e.getMessage());
 
             // Return a failure response with JSON and HTTP status message 500
-            return new ResponseEntity<>(
-                    "{\"msg\": \"Fail to create user\"}",
-                    HttpStatus.INTERNAL_SERVER_ERROR
-            );
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .contentType(MediaType.APPLICATION_JSON) // Ensure content type is JSON
+                    .body("{\"msg\": \"Fail to create user\"}");
         }
     }
 
