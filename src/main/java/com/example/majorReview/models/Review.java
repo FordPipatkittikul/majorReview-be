@@ -10,6 +10,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Max;
+import java.time.LocalDateTime;
 
 import com.example.majorReview.models.User;
 
@@ -41,6 +42,9 @@ public class Review {
 
     @Column(name = "review", nullable = false, columnDefinition = "TEXT")
     private String review;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
     // Getters and setters
     public Long getReviewId() {
@@ -89,6 +93,14 @@ public class Review {
 
     public void setReview(String review) {
         this.review = review;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
 }

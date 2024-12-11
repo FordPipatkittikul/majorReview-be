@@ -4,14 +4,8 @@ import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 import com.example.majorReview.services.UserService;
@@ -91,6 +85,32 @@ public class ReviewController {
             );
         }
 
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateReview(@RequestBody Review review, @PathVariable Long id){
+        try {
+            reviewService.updateReviewById(id,review);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body("{\"msg\": \"review update successfully\"}");
+        } catch (Exception e) {
+            // Log the error for debugging purposes
+            System.err.println("Error while update review: " + e.getMessage());
+
+            // Return a failure response with JSON and HTTP status message 500
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body("{\"msg\": \"Fail to update review\"}");
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteReview(@PathVariable Long id){
+        reviewService.deleteReview(id);
+        return ResponseEntity.noContent().build();
     }
 
 
