@@ -16,7 +16,7 @@ assembled, and managed by Spring's IoC container. The Spring IoC container is re
 - Managing dependencies between beans (Dependency Injection).
 - Managing the lifecycle of beans (initialization and destruction).
 
-# ways to make object spring managed
+# Ways to make object spring managed
 
 1) XML-based configuration
 
@@ -27,9 +27,46 @@ assembled, and managed by Spring's IoC container. The Spring IoC container is re
 
 In Spring Boot, annotations are heavily used to manage objects, their lifecycle, and dependencies.
 
-# spring boot annotations
+# Springboot layer
+
+**Controller**
+
+    Purpose: Handles HTTP requests and responses.
+    
+    Responsibilities:
+    Accept and process user input from web pages, REST APIs, etc.
+    Call service methods to perform business logic.
+    Return responses, often in JSON or HTML format.
+
+**Service**
+
+    Purpose: Contains business logic and application rules.
+
+    Responsibilities:
+    Orchestrate operations by coordinating between different layers.
+    Apply validations, calculations, and processing logic.
+
+
+**Repository**
+
+    Purpose: Handles interaction with the database.
+    
+    Responsibilities:
+    Perform CRUD (Create, Read, Update, Delete) operations.
+    Encapsulate database queries.
+
+**Model**
+
+    Purpose: Represents the application's core data structures and entities.
+    
+    Responsibilities:
+    Define the structure of the data.
+    Annotate with JPA or Hibernate annotations to map objects to database tables.
+
+# Spring boot annotations
 
 1. Component Scanning and Bean Creation
+   
 - `@Component`: Marks a class as a Spring-managed component.
 - `@Service`: A specialized version of `@Component`, used for service-layer logic.
 - `@Repository`: A specialized version of `@Component`, used for the persistence layer.
@@ -37,6 +74,7 @@ In Spring Boot, annotations are heavily used to manage objects, their lifecycle,
 - `@RestController`: Combines `@Controller` and `@ResponseBody` for REST APIs.
 
 2) Dependency Injection
+   
 - `@Autowired`: Automatically injects dependencies into a bean (by type).
 
     Is used for Dependency Injection (DI) in Spring.
@@ -54,6 +92,7 @@ In Spring Boot, annotations are heavily used to manage objects, their lifecycle,
     **In Tests**: When you need to automatically inject beans for testing.
   
 3) Configuration and Bean Definitions
+   
 - @Configuration: Marks a class as a source of bean definitions.
 - @Bean: Indicates that a method produces a bean managed by the Spring container.
   
@@ -71,14 +110,17 @@ In Spring Boot, annotations are heavily used to manage objects, their lifecycle,
     
     When you annotate your main application class with `@SpringBootApplication`, it enables component scanning automatically. 
   
-    This will scan the package where the main class is located and all sub-packages for components (like `@Component`, `@Service`, `@Repository`, etc.) 
-    
-    and automatically register them as beans.
+    This will scan the package where the main class is located and all sub-packages for components (like `@Component`, `@Service`, `@Repository`, etc.) and automatically register them as beans.
+
+5) Web Annotations
+   
+- `@RequestMapping`, `@GetMapping`, `@PostMapping`, etc.: Map HTTP requests to specific controller methods.
+- `@PathVariable`: Extract values from the URI.
+- `@RequestParam`: Extract query parameters from the request.
 
 
+# Spring JDBC
 
-## Spring data JPA
+# Spring data JPA
 
-
-
-## Security
+# Spring Security
