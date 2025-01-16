@@ -16,11 +16,6 @@ assembled, and managed by Spring's IoC container. The Spring IoC container is re
 - Managing dependencies between beans (Dependency Injection).
 - Managing the lifecycle of beans (initialization and destruction).
 
-How are Beans defined
-
-Below this These annotations mark a class as a Spring-managed bean. 
-When the Spring Boot application starts, 
-it will Scan the classpath for these annotations and automatically register them as beans in the IoC container.
 
 1)
 - `@Component`: A generic stereotype annotation to mark a class as a Spring-managed bean.
@@ -35,9 +30,9 @@ This gives you **more control over the bean creation process**
 **Configuration Class**: It is used to define beans explicitly using Java methods. The methods inside a @Configuration class annotated with @Bean will be used to create Spring beans.
 **Bean Definition**: Each method annotated with @Bean within a @Configuration class represents a bean definition. The Spring container manages these beans like it does for beans created via @Component.
 
-3) **Automatic Bean Detection** with @SpringBootApplication 
-When you annotate your main application class with @SpringBootApplication, it enables component scanning automatically. 
-This will scan the package where the main class is located and all sub-packages for components (like @Component, @Service, @Repository, etc.) 
+3) **Automatic Bean Detection** with `@SpringBootApplication` 
+When you annotate your main application class with `@SpringBootApplication`, it enables component scanning automatically. 
+This will scan the package where the main class is located and all sub-packages for components (like `@Component`, `@Service`, `@Repository`, etc.) 
 and automatically register them as beans.
 
 4) `@Autowired`
