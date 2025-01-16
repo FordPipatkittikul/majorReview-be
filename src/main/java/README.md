@@ -118,9 +118,68 @@ In Spring Boot, annotations are heavily used to manage objects, their lifecycle,
 - `@PathVariable`: Extract values from the URI.
 - `@RequestParam`: Extract query parameters from the request.
 
+# .properties file
 
+A .properties file in Java is a simple text file used to store key-value pairs, where both the key and value are strings. These files are commonly used for:
+
+Configuration: Storing application settings like database URLs, usernames, passwords, etc.
+
+    Some important syntax
+    
+    spring.datasource.url=your database URL
+    spring.datasource.username=Database Username
+    spring.datasource.password=Database Pass
+    spring.datasource.driver-class-name=org.postgresql.Driver
+    spring.security.user.name=spring security username
+    spring.security.user.password=spring security pass
+
+    # Comment: if you don't have a database create it but if you have it update it.
+    spring.jpa.hilbernate.ddl-auto=update
+
+    # Comment: showing sql syntax
+    spring.jpa.show-sql=true
+    
 # Spring JDBC
+
+
 
 # Spring data JPA
 
+    public interface ReviewRepository extends JpaRepository<Review, Long> {
+        List<Review> findByMajorName(String majorName);
+    }
+    
+    In JpaRepository interface, they ask for two things which class type are you working with and the what is a type of primary key.
+
+    basic CRUD operations
+
+    **Save an Entity: <S extends T> S save(S entity);**
+
+    E.X.: userRepository.save(newUser);
+    
+    **Find an Entity by ID: Optional<T> findById(ID id);**
+    
+    E.X.: Optional<User> user = userRepository.findById(userId);
+    
+    **Find All Entities List<T> findAll();**
+    
+    E.X.: List<Review> review = reviewRepository.findAll();
+
+**Custom Query Methods**
+
+1. Derived Query Methods
+
+        public interface ReviewRepository extends JpaRepository<Review, Long> {
+            List<Review> findByMajorName(String majorName);
+        }
+
+3. Custom JPQL/Native Queries
+
+       @Query("SELECT u FROM User u WHERE u.lastName = ?1")
+       List<User> findUsersByLastName(String lastName);
+    
+       @Query(value = "SELECT * FROM users WHERE last_name = ?1", nativeQuery = true)
+       List<User> findUsersByLastNameNative(String lastName);
+
+    
 # Spring Security
