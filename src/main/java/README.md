@@ -151,7 +151,7 @@ Configuration: Storing application settings like database URLs, usernames, passw
     
     In JpaRepository interface, they ask for two things which class type are you working with and the what is a type of primary key.
 
-    basic CRUD operations
+    basic CRUD operations:
 
     **Save an Entity: <S extends T> S save(S entity);**
 
@@ -164,6 +164,8 @@ Configuration: Storing application settings like database URLs, usernames, passw
     **Find All Entities List<T> findAll();**
     
     E.X.: List<Review> review = reviewRepository.findAll();
+
+    **FOR UPDATE, DELETE SEARCH IT UP**
 
 **Custom Query Methods**
 
