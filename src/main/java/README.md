@@ -183,5 +183,62 @@ Configuration: Storing application settings like database URLs, usernames, passw
        @Query(value = "SELECT * FROM users WHERE last_name = ?1", nativeQuery = true)
        List<User> findUsersByLastNameNative(String lastName);
 
+# Spring AOP
+
+Spring AOP (Aspect-Oriented Programming) is a powerful feature in the Spring Framework that enables modularization of cross-cutting concerns, such as logging, security, transactions, and error handling, **without changing any code that in the core business logic of the application**.
+
+Key Concepts of Spring AOP
+1) Aspect: A module that encapsulates a cross-cutting concern. For example, a logging module can be an aspect.
+
+2) Advice: The action taken by an aspect. It is the actual logic that is executed. Types of advice include:
+- Before: Runs before the method execution.
+- After: Runs after the method execution (regardless of its outcome).
+- After Returning: Runs after a method successfully returns.
+- After Throwing: Runs if a method throws an exception.
+- Around: Runs both before and after the method execution, allowing more control over the behavior.
+
+3) Join Point: A specific point in the application where advice can be applied, like method calls or object initialization.
+
+4) Pointcut: A predicate that matches join points. Pointcuts help define where advice should be applied.
+
+5) Weaving: The process of linking aspects with other application types or objects.
+
+1) `@Aspect`
+- Marks a class as an aspect, defining cross-cutting logic.
+Example:
+
+        @Aspect
+        @Component
+        public class LoggingAspect {
+        
+        	public static final Logger LOGGER=LoggerFactory.getLogger(LoggingAspect.class);
+        	
+        	
+            // return type, class-name.method-name(args)
+        	@Before("execution (* com.telusko.springbootrest.service.JobService.*(..))")
+        	public void logMethodCall() {
+        		LOGGER.info("Method Called ");
+        	}
+        }
+     
+2) `@Before`
+Marks a method as advice that runs before a matched join point.
+Example:
+
+        @Aspect
+        @Component
+        public class LoggingAspect {
+        
+        	public static final Logger LOGGER=LoggerFactory.getLogger(LoggingAspect.class);
+        	
+        	
+            // return type, class-name.method-name(args)
+        	@Before("execution (* com.telusko.springbootrest.service.JobService.getJob(..)) || execution (* com.telusko.springbootrest.service.JobService.updateJob(..))")
+        	public void logMethodCall(Joinpoint jp) {
+        		LOGGER.info("Method Called " + jp.getSignature().getName());
+        	}
+   
+        }
+
     
 # Spring Security
