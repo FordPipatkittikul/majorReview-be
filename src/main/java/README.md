@@ -1,9 +1,13 @@
-# spring boot developer note
+# Spring framework V.S. Spring boot 
 
-## main key concept
+Spring framework provides comprehensive infrastructure support for developing Java applications. 
+
+Spring Boot is basically an extension of the Spring framework, which eliminates the boilerplate configurations required for setting up a Spring application.
+
+# Spring framework concept
 
 **Dependency Injection (DI)** is a design pattern where an object (or class) receives its dependencies from an external source rather than creating them itself. 
-In Spring, the IoC (Inversion of Control) Container is responsible for managing the objects' lifecycle and injecting dependencies when needed.
+In Spring, the ***IoC (Inversion of Control)** Container is responsible for managing the objects' lifecycle and injecting dependencies when needed.
 
 A **bean** is simply an object that is created, 
 assembled, and managed by Spring's IoC container. The Spring IoC container is responsible for:
